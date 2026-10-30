@@ -20,7 +20,7 @@ class IngredientSerializer(serializers.ModelSerializer):
     def validate_name(self, value):
         value = value.strip()
         if len(value) < 2:
-            raise serializers.ValidattionError("Nazwa składnika musi mieć co najmniej 2 znaki.")
+            raise serializers.ValidationError("Nazwa składnika musi mieć co najmniej 2 znaki.")
         return value
 
 class IngredientFilterSerializer(serializers.Serializer):
