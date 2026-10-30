@@ -5,7 +5,7 @@ from rest_framework import viewsets
 from rest_framework.exceptions import APIException
 
 from .models import Ingredient, Cocktail, CocktailIngredient
-from .serializers import IngredientSerializer, IngredientFilterSerializer, CocktailSerializer, CocktailIngredientSerializer
+from .serializers import IngredientSerializer, IngredientFilterSerializer, CocktailSerializer, CocktailFilterSerializer
 from .pagination import StandardPagination
 
 # Create your views here.
@@ -61,20 +61,21 @@ class CocktailViewSet(viewsets.ModelViewSet):
 
         if 'search' in params:
             queryset = queryset.filter(name__icontains=params['search'])
-        
-        if 'ingredient_id' in params:
-            has_ingredient = CocktailIngredient.objects.filter(
+
+        if 'ingredient' in params:
+            has_ingredient = Exists(
                 CocktailIngredient.objects.filter(
                     cocktail=OuterRef('pk'),
-                    ingredient__name__icontrains=params["ingredient"]
+                    ingredient__name__icontains=params["ingredient"],
                 )
             )
             queryset = queryset.filter(has_ingredient)
+
         if "is_alcoholic" in params:
             has_alcohol = Exists(
                 CocktailIngredient.objects.filter(
                     cocktail=OuterRef('pk'),
-                    ingredient__is_alkoholic=True,
+                    ingredient__is_alcoholic=True,
                 )
             )
             queryset = queryset.filter(

@@ -68,7 +68,7 @@ class CocktailSerializer(serializers.ModelSerializer):
     def validate_ingredients(self, value):
         if not value:
             raise serializers.ValidationError("Koktajl musi mieć co najmniej jeden składnik.")
-        ids = [item['ingredient_id'].id for item in value]
+        ids = [item['ingredient'].id for item in value]
         if len(ids) != len(set(ids)):
             raise serializers.ValidationError("Koktajl nie może mieć powtórzonych składników.")
         return value
