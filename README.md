@@ -17,7 +17,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Po odpaleniu API jest pod http://127.0.0.1:8000/api/ i można je klikać bezpośrednio w przeglądarce. Panel admina jest pod http://127.0.0.1:8000/admin/, ale najpierw trzeba założyć konto przez `python manage.py createsuperuser`.
+
 
 ## Endpointy
 
@@ -127,6 +127,5 @@ Z części "nice to have" nie zrobiłem (na ten moment):
 
 - logowania, ról User i Admin i przypisania autora do koktajlu
 - ocen i recenzji
-- dokumentacji w Swaggerze
 - testów automatycznych
 
