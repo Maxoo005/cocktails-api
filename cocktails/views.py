@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.db.models import ProtectedError, Exists, OuterRef
 from rest_framework import viewsets
 from rest_framework.exceptions import APIException
+from drf_spectacular.utils import extend_schema, extend_schema_view
 
 from .models import Ingredient, Cocktail, CocktailIngredient
 from .serializers import IngredientSerializer, IngredientFilterSerializer, CocktailSerializer, CocktailFilterSerializer
@@ -14,6 +15,7 @@ class IngredientInUse(APIException):
     default_detail = "Nie można usunąć składnika użytego koktajlu"
     default_code = "ingredient_in_use"
 
+@extend_schema_view(list=extend_schema(parameters=[IngredientFilterSerializer]))
 class IngredientViewSet(viewsets.ModelViewSet):
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
@@ -42,6 +44,7 @@ class IngredientViewSet(viewsets.ModelViewSet):
         except ProtectedError:
             raise IngredientInUse()
 
+@extend_schema_view(list=extend_schema(parameters=[CocktailFilterSerializer]))
 class CocktailViewSet(viewsets.ModelViewSet):
     queryset = Cocktail.objects.prefetch_related("cocktail_ingredients__ingredient")
     serializer_class = CocktailSerializer
