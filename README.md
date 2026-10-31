@@ -127,5 +127,5 @@ Z części "nice to have" nie zrobiłem (na ten moment):
 
 - logowania, ról User i Admin i przypisania autora do koktajlu
 - ocen i recenzji
-- testów automatycznych
+
 
